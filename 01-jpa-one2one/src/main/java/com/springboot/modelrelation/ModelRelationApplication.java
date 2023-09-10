@@ -21,11 +21,21 @@ public class ModelRelationApplication {
 		return runner -> {
 //			createInstructor(appDAO);
 
-			findInstructor(appDAO);
+//			findInstructorById(appDAO);
+
+			deleteInstructorById(appDAO);
 		};
 	}
 
-	private void findInstructor(AppDAO appDAO) {
+	private void deleteInstructorById(AppDAO appDAO) {
+		int theId = 2;
+		System.out.println("Deleting instructor id : " + theId);
+
+		appDAO.deleteInstructorById(theId);
+		System.out.println("Deleted");
+	}
+
+	private void findInstructorById(AppDAO appDAO) {
 		int theId = 2;
 		System.out.println("Finding instructor id : " + theId);
 
