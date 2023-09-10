@@ -18,7 +18,9 @@ public class InstructorDetails {
     @Column(name="hobby")
     private String hobby;
 
-    @OneToOne(mappedBy = "instructorDetails", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "instructorDetails", cascade = {
+            CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH
+    }) // All cascade types EXCEPT 'REMOVE'. Will be able to remove details but not the 'instructor'
     private Instructor instructor;
 
     /* -- Constructors -- */
@@ -29,7 +31,6 @@ public class InstructorDetails {
     }
 
     /* -- Getters / Setters -- */
-
     public int getInstructor_id() {
         return instructor_id;
     }
@@ -57,7 +58,6 @@ public class InstructorDetails {
     public void setInstructor(Instructor instructor) {
         this.instructor = instructor;
     }
-
 
 
     /* -- toString -- */

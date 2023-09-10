@@ -55,6 +55,11 @@ public class AppDAOImpl implements AppDAO{
 
         InstructorDetails tempInstDetails = entityManager.find(InstructorDetails.class, theId);
         if (tempInstDetails != null) {
+
+//            - get the instructor that associate with the instructorDetails
+//            - then set the instructorDetails of that instructor to null
+            tempInstDetails.getInstructor().setInstructorDetails(null);
+
             entityManager.remove(tempInstDetails);
             System.out.println("Instructor details deleted successfully.");
         } else {

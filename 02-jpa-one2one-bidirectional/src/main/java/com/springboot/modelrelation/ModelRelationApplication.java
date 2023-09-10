@@ -32,7 +32,7 @@ public class ModelRelationApplication {
 	}
 
 	private void deleteInstDetailsById(AppDAO appDAO) {
-		int theId = 4;
+		int theId = 5;
 		System.out.println("Deleting instructor details id : " + theId);
 
 		appDAO.deleteInstructorDetailsById(theId);
