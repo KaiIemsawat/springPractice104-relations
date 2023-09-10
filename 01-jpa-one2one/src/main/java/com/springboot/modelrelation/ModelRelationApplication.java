@@ -19,8 +19,19 @@ public class ModelRelationApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner(AppDAO appDAO) {
 		return runner -> {
-			createInstructor(appDAO);
+//			createInstructor(appDAO);
+
+			findInstructor(appDAO);
 		};
+	}
+
+	private void findInstructor(AppDAO appDAO) {
+		int theId = 2;
+		System.out.println("Finding instructor id : " + theId);
+
+		Instructor tempInstructor = appDAO.findInstructorById(theId);
+		System.out.println("tempinstructor : " + tempInstructor);
+		System.out.println("the associated instructorDetail only : " + tempInstructor.getInstructorDetails());
 	}
 
 	private void createInstructor(AppDAO appDAO) {
@@ -38,12 +49,12 @@ public class ModelRelationApplication {
 
 		//		create the instructor
 		Instructor tempInstructor = new Instructor(
-				"Titann", "Iem", "titann@email.com"
+				"stokii", "Hampton", "biscuit@email.com"
 		);
 
 //		Create the instructor detail
 		InstructorDetails tempInstructorDetail = new InstructorDetails(
-				"www.titann.com/youtube", "eat anything"
+				"www.stokii.com/youtube", "greeting people"
 		);
 
 

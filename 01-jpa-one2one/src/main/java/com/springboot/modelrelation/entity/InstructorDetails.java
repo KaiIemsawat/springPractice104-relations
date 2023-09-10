@@ -9,7 +9,7 @@ public class InstructorDetails {
     /* -- Fields -- */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="instructor_detail_id")
+    @Column(name="id")
     private int instructor_id;
 
     @Column(name = "youtube_channel")
