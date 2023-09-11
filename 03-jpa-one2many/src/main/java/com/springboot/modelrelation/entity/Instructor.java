@@ -2,6 +2,9 @@ package com.springboot.modelrelation.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "instructor")
 public class Instructor {
@@ -25,6 +28,14 @@ public class Instructor {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "instructor_detail_id")
     private InstructorDetails instructorDetails;
+
+    @OneToMany(mappedBy = "instructor",
+//               fetch = FetchType.EAGER, // For OneToMany, fetch = FetchType.LAZY is default
+               cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    private List<Course> courses;
+//     @OneToMany(mappedBy = "instructor") <-- this 'instructor'
+//     refer to -->  private Instructor 'instructor; in Course class
+
 
     /* -- Constructors -- */
     public Instructor() {}
@@ -63,11 +74,29 @@ public class Instructor {
         this.email = email;
     }
 
+    public List<Course> getCourses() {
+        return courses;
+    }
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
+    }
+
     public InstructorDetails getInstructorDetails() {
         return instructorDetails;
     }
     public void setInstructorDetails(InstructorDetails instructorDetails) {
         this.instructorDetails = instructorDetails;
+    }
+
+//    Add convenience methods for bi-directional relationship
+    public void add(Course tempCourse) {
+        if (courses == null) {
+            courses = new ArrayList<>();
+        }
+
+        courses.add(tempCourse);
+
+        tempCourse.setInstructor(this);
     }
 
     /* -- toString() -- */

@@ -1,7 +1,10 @@
 package com.springboot.modelrelation.dao;
 
+import com.springboot.modelrelation.entity.Course;
 import com.springboot.modelrelation.entity.Instructor;
 import com.springboot.modelrelation.entity.InstructorDetails;
+
+import java.util.List;
 
 public interface AppDAO {
     void save(Instructor theInstructor);
@@ -13,4 +16,8 @@ public interface AppDAO {
     InstructorDetails findInstructorDetailsById(int theId);
 
     void deleteInstructorDetailsById(int theId);
+
+    List<Course> findCoursesByInstructorId(int theId);
+
+    Instructor findInstructorByIdJoinFetch(int theId);
 }

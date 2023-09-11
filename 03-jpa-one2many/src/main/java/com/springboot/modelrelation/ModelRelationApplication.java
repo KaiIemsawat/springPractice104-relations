@@ -1,12 +1,15 @@
 package com.springboot.modelrelation;
 
 import com.springboot.modelrelation.dao.AppDAO;
+import com.springboot.modelrelation.entity.Course;
 import com.springboot.modelrelation.entity.Instructor;
 import com.springboot.modelrelation.entity.InstructorDetails;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+
+import java.util.List;
 
 @SpringBootApplication
 public class ModelRelationApplication {
@@ -27,9 +30,90 @@ public class ModelRelationApplication {
 
 //			findInstructorDetailsById(appDAO);
 
-			deleteInstDetailsById(appDAO);
+//			deleteInstDetailsById(appDAO);
+
+//			createInstructorWithCourses(appDAO);
+
+//			findInstructorAndCourses(appDAO);
+
+//			findCoursesAssociateToInstructorId(appDAO);
+
+			findInstructorWithCoursesJoinFetch(appDAO);
+			
 		};
 	}
+
+	private void findInstructorWithCoursesJoinFetch(AppDAO appDAO) {
+		int theId = 1;
+		System.out.println("Finding instructor id : " + theId);
+		Instructor tempInstructor = appDAO.findInstructorByIdJoinFetch(theId);
+
+		System.out.println("Temp instructor : " + tempInstructor);
+		System.out.println("The associated courses : " + tempInstructor.getCourses());
+
+		System.out.println("Completed..!");
+
+	}
+
+	private void findCoursesAssociateToInstructorId(AppDAO appDAO) {
+		int theId = 1;
+		System.out.println("Finding instructor id : " + theId);
+
+		Instructor tempInstructor = appDAO.findInstructorById(theId);
+		System.out.println("Temp instructor : " + tempInstructor);
+
+//		find courses for instructor
+		System.out.println("Finding courses for instructor id : " + theId);
+		List<Course> courses =appDAO.findCoursesByInstructorId(theId);
+
+//		Associate the objects
+		tempInstructor.setCourses(courses);
+//		Verify results
+		System.out.println("The courses : " + tempInstructor.getCourses());
+		System.out.println("Completed..!");
+	}
+
+	private void findInstructorAndCourses(AppDAO appDAO) {
+		int theId = 1;
+		System.out.println("Finding instructor id : " + theId);
+
+		Instructor tempInstructor = appDAO.findInstructorById(theId);
+		System.out.println("Temp instructor : " + tempInstructor);
+		System.out.println("The associate courses : " + tempInstructor.getCourses());
+		System.out.println("Completed..!");
+	}
+
+	private void createInstructorWithCourses(AppDAO appDAO) {
+//		create the instructor
+		Instructor tempInstructor = new Instructor(
+				"Zukkii", "Iem", "zukkii@email.com"
+		);
+
+//		Create the instructor detail
+		InstructorDetails tempInstructorDetail = new InstructorDetails(
+				"www.zukkii.com", "Ball catching"
+		);
+
+//		Associate the objects
+		tempInstructor.setInstructorDetails(tempInstructorDetail);
+
+//		Create courses
+		Course tempCourse1 = new Course("Random course 3");
+		Course tempCourse2 = new Course("Random course 4");
+
+//		Add courses to instructor
+		tempInstructor.add(tempCourse1);
+		tempInstructor.add(tempCourse2);
+
+//		Save the instructor
+//		Note : this will also save the course since CascadeType.PERSIST was declared in entity
+		System.out.println("Saving instructor: " + tempInstructor);
+		System.out.println("The coursed: " + tempInstructor.getCourses());
+		appDAO.save(tempInstructor);
+
+		System.out.println("Created");
+	}
+
 
 	private void deleteInstDetailsById(AppDAO appDAO) {
 		int theId = 5;
@@ -82,17 +166,15 @@ public class ModelRelationApplication {
 //		);
 
 
-		//		create the instructor
+//		create the instructor
 		Instructor tempInstructor = new Instructor(
-				"stokii", "Hampton", "biscuit@email.com"
+				"Stokii", "Hampton", "biscuit@email.com"
 		);
 
 //		Create the instructor detail
 		InstructorDetails tempInstructorDetail = new InstructorDetails(
 				"www.stokii.com/youtube", "greeting people"
 		);
-
-
 
 //		Associate the objects
 		tempInstructor.setInstructorDetails(tempInstructorDetail);
