@@ -23,9 +23,24 @@ public class ModelRelationApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner(AppDAO appDAO) {
 		return runner -> {
+//			createCourseAndReviews(appDAO);
 
-			createCourseAndReviews(appDAO);
+			retrieveCourseAndReviews(appDAO);
 		};
+	}
+
+	private void retrieveCourseAndReviews(AppDAO appDAO) {
+//		Get the course and reviews
+		int theId = 10;
+		Course tempCourse = appDAO.findCourseAndReviewsByCourseId(theId);
+
+//		Print the course
+		System.out.println(tempCourse);
+
+//		Print the associate reviews
+		System.out.println(tempCourse.getReviews());
+
+		System.out.println("Completed");
 	}
 
 	private void createCourseAndReviews(AppDAO appDAO) {

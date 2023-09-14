@@ -141,5 +141,18 @@ public class AppDAOImpl implements AppDAO{
         entityManager.persist(theCourse); // Will save both course and reviews since 'CascadeType.All' was declared
     }
 
+    @Override
+    public Course findCourseAndReviewsByCourseId(int theId) {
+//        Create query
+        TypedQuery<Course> query = entityManager.createQuery(
+                "SELECT c from Course c JOIN FETCH c.reviews WHERE c.id = :data", Course.class
+        );
+        query.setParameter("data", theId);
+
+//        Execute query
+        Course course = query.getSingleResult();
+        return course;
+    }
+
 
 }
