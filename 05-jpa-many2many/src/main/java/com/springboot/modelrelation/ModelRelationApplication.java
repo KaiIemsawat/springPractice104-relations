@@ -23,15 +23,11 @@ public class ModelRelationApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner(AppDAO appDAO) {
 		return runner -> {
-//			createCourseAndReviews(appDAO);
 
-//			retrieveCourseAndReviews(appDAO);
-
-			deleteCourseById(appDAO);
 
 		};
 	}
-
+	
 //same as deleteCourseById()
 	private void deleteCourseAndReviewsByCourseId(AppDAO appDAO) {
 		int theId = 10;
