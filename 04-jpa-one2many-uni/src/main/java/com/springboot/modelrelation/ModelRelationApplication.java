@@ -4,6 +4,7 @@ import com.springboot.modelrelation.dao.AppDAO;
 import com.springboot.modelrelation.entity.Course;
 import com.springboot.modelrelation.entity.Instructor;
 import com.springboot.modelrelation.entity.InstructorDetails;
+import com.springboot.modelrelation.entity.Review;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,8 +24,20 @@ public class ModelRelationApplication {
 	public CommandLineRunner commandLineRunner(AppDAO appDAO) {
 		return runner -> {
 
-
+			createCourseAndReviews(appDAO);
 		};
+	}
+
+	private void createCourseAndReviews(AppDAO appDAO) {
+//		Create a course
+		Course tempCourse = new Course("How to eat all the snacks");
+
+//		Add reviews
+		tempCourse.addReview(new Review("Now, I can eat all of the snack in the house"));
+		tempCourse.addReview(new Review("Hooman gib me a lot of snacks now"));
+		tempCourse.addReview(new Review("This is the best course for us, the doggos!!"));
+
+//		Save course
 	}
 
 	private void deleteCourseById(AppDAO appDAO) {
