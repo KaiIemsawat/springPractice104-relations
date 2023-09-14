@@ -40,9 +40,34 @@ public class ModelRelationApplication {
 
 //			findInstructorWithCoursesJoinFetch(appDAO);
 
-			updateInstructor(appDAO);
+//			updateInstructor(appDAO);
+
+//			updateCourseById(appDAO);
+
+			deleteCourseById(appDAO);
 
 		};
+	}
+
+	private void deleteCourseById(AppDAO appDAO) {
+		int theId = 10;
+		System.out.println("Deleting course id : " + theId);
+
+		appDAO.deleteCourseById(theId);
+		System.out.println("Course " + theId + " is deleted..!");
+	}
+
+	private void updateCourseById(AppDAO appDAO) {
+		int theId = 10;
+
+//		find the course
+		System.out.println("Finding course id : " + theId);
+		Course tempCourse = appDAO.findCourseById(theId);
+
+//		Update the course
+		tempCourse.setTitle("Updated Course Title");;
+		appDAO.updateCourse(tempCourse);
+		System.out.println("Course updated... !");
 	}
 
 	private void updateInstructor(AppDAO appDAO) {
@@ -153,8 +178,8 @@ public class ModelRelationApplication {
 		System.out.println("Task Completed");
 	}
 
-	private void deleteInstructorById(AppDAO appDAO) {
-		int theId = 2;
+	private void deleteInstructorById(AppDAO appDAO) { // with associate courses
+		int theId = 1;
 		System.out.println("Deleting instructor id : " + theId);
 
 		appDAO.deleteInstructorById(theId);
