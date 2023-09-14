@@ -38,9 +38,26 @@ public class ModelRelationApplication {
 
 //			findCoursesAssociateToInstructorId(appDAO);
 
-			findInstructorWithCoursesJoinFetch(appDAO);
-			
+//			findInstructorWithCoursesJoinFetch(appDAO);
+
+			updateInstructor(appDAO);
+
 		};
+	}
+
+	private void updateInstructor(AppDAO appDAO) {
+		int theId = 1;
+
+//		find the instructor
+		System.out.println("Finding instructor with id : " + theId);;
+		Instructor tempInstructor = appDAO.findInstructorById(theId);
+
+//		Update data for the instructor
+		System.out.println("Updating instructor id : " + theId);
+		tempInstructor.setLast_name("Tester");
+		appDAO.update(tempInstructor);
+
+		System.out.println("UPDATED..!");
 	}
 
 	private void findInstructorWithCoursesJoinFetch(AppDAO appDAO) {

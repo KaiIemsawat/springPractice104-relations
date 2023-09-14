@@ -89,7 +89,7 @@ public class AppDAOImpl implements AppDAO{
     public Instructor findInstructorByIdJoinFetch(int theId) {
         TypedQuery<Instructor> query = entityManager.createQuery(
 //                                            'i' is alias.
-                    "select i from Instructor i JOIN FETCH i.courses " +
+                    "select i from Instructor i JOIN FETCH i.courses JOIN FETCH i.instructorDetails " +
 //                                                          Need ' ' a whitespace before the quotation since multiple strings will be combined
                     "where i.id = :data", Instructor.class);
         query.setParameter("data", theId);
@@ -98,5 +98,11 @@ public class AppDAOImpl implements AppDAO{
         Instructor instructor = query.getSingleResult();
 
         return instructor;
+    }
+
+    @Override
+    @Transactional
+    public void update(Instructor tempInstructor) {
+        entityManager.merge(tempInstructor); // entityManager.merge(thisParameter); <-- .merge will update the parameter in ()
     }
 }
