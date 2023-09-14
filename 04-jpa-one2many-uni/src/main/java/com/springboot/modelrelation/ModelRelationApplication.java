@@ -37,7 +37,12 @@ public class ModelRelationApplication {
 		tempCourse.addReview(new Review("Hooman gib me a lot of snacks now"));
 		tempCourse.addReview(new Review("This is the best course for us, the doggos!!"));
 
-//		Save course
+//		Save course (and reviews)
+		System.out.println("Saving the course");
+		System.out.println(tempCourse);
+		System.out.println(tempCourse.getReviews());
+
+		appDAO.saveCourse(tempCourse);
 	}
 
 	private void deleteCourseById(AppDAO appDAO) {
