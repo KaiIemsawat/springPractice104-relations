@@ -3,6 +3,7 @@ package com.springboot.modelrelation.dao;
 import com.springboot.modelrelation.entity.Course;
 import com.springboot.modelrelation.entity.Instructor;
 import com.springboot.modelrelation.entity.InstructorDetails;
+import com.springboot.modelrelation.entity.Student;
 
 import java.util.List;
 
@@ -32,4 +33,8 @@ public interface AppDAO {
     void saveCourse(Course theCourse);
 
     Course findCourseAndReviewsByCourseId(int theId);
+
+    Course findCourseAndStudentsByCourseId(int theId);
+
+    Student findStudentAndCoursesByStudentId(int id);
 }

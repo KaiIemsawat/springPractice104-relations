@@ -1,10 +1,8 @@
 package com.springboot.modelrelation;
 
 import com.springboot.modelrelation.dao.AppDAO;
-import com.springboot.modelrelation.entity.Course;
-import com.springboot.modelrelation.entity.Instructor;
-import com.springboot.modelrelation.entity.InstructorDetails;
-import com.springboot.modelrelation.entity.Review;
+import com.springboot.modelrelation.entity.*;
+import jakarta.transaction.Transactional;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,12 +21,63 @@ public class ModelRelationApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner(AppDAO appDAO) {
 		return runner -> {
+//			createCourseAndStudents(appDAO);
 
+//			findCourseAndStudents(appDAO);
+
+			findStudentAndAssociatedCourses(appDAO);
 
 		};
 	}
-	
-//same as deleteCourseById()
+
+	private void findStudentAndAssociatedCourses(AppDAO appDAO) {
+		int theId = 2;
+		Student tempStudent = appDAO.findStudentAndCoursesByStudentId(theId);
+
+		System.out.println("Student with id : " + theId + " : " + tempStudent);
+		System.out.println("Associated courses : " + tempStudent.getCourses());
+
+		System.out.println("Completed..!");
+	}
+
+	private void findCourseAndStudents(AppDAO appDAO) {
+		int theId = 10;
+		Course tempCourse = appDAO.findCourseAndStudentsByCourseId(theId);
+
+		if (tempCourse != null) {
+			System.out.println("Loading course : " + tempCourse);
+			System.out.println("Associated students : " + tempCourse.getStudents());
+		} else {
+			System.out.println("Course not found for ID: " + theId);
+		}
+
+		System.out.println("\nCOMPLETED!!");
+	}
+
+	private void createCourseAndStudents(AppDAO appDAO) {
+//		Create a course
+		Course tempCourse = new Course("How to get more snack from hooman 101");
+
+//		Create students
+		Student tempStudent1 = new Student("Zukkii", "Iem", "zukkii@email.com");
+		Student tempStudent2 = new Student("Titann", "Iem", "titann@email.com");
+		Student tempStudent3 = new Student("Buscuit", "Hampton", "buscuit@email.com");
+
+//		Add students to the course
+		tempCourse.addStudent(tempStudent1);
+		tempCourse.addStudent(tempStudent2);
+		tempCourse.addStudent(tempStudent3);
+
+//		Save the course and the associated students
+		System.out.println("Saving the course : " + tempCourse);
+		System.out.println("Associated students : " +tempCourse.getStudents());
+
+		appDAO.saveCourse(tempCourse); // Again, the students will be saved since 'Cascade' was declared
+		System.out.println("Add course and associated students completed");
+
+	}
+
+	//same as deleteCourseById()
 	private void deleteCourseAndReviewsByCourseId(AppDAO appDAO) {
 		int theId = 10;
 

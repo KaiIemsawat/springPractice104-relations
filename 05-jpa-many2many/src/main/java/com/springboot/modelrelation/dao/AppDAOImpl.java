@@ -3,7 +3,9 @@ package com.springboot.modelrelation.dao;
 import com.springboot.modelrelation.entity.Course;
 import com.springboot.modelrelation.entity.Instructor;
 import com.springboot.modelrelation.entity.InstructorDetails;
+import com.springboot.modelrelation.entity.Student;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -145,7 +147,7 @@ public class AppDAOImpl implements AppDAO{
     public Course findCourseAndReviewsByCourseId(int theId) {
 //        Create query
         TypedQuery<Course> query = entityManager.createQuery(
-                "SELECT c from Course c JOIN FETCH c.reviews WHERE c.id = :data", Course.class
+                "SELECT c FROM Course c JOIN FETCH c.reviews WHERE c.id = :data", Course.class
         );
         query.setParameter("data", theId);
 
@@ -154,5 +156,36 @@ public class AppDAOImpl implements AppDAO{
         return course;
     }
 
+    public Course findCourseAndStudentsByCourseId(int theId) {
+        TypedQuery<Course> query = entityManager.createQuery(
+                "SELECT c FROM Course c JOIN FETCH c.students WHERE c.id = :data", Course.class
+        );
+        query.setParameter("data", theId);
 
+        try {
+            Course course = query.getSingleResult();
+            return course;
+        } catch (NoResultException e) {
+            // Course not found, return null or handle the exception as needed
+            System.out.println("EXCEPTION ----> " + e);
+            return null;
+        }
+    }
+
+    @Override
+    public Student findStudentAndCoursesByStudentId(int id) {
+        TypedQuery<Student> query = entityManager.createQuery(
+                "SELECT s FROM Student s JOIN FETCH s.courses WHERE s.id = :data", Student.class
+        );
+        query.setParameter("data", id);
+
+        try {
+            Student student = query.getSingleResult();
+            return student;
+        }
+        catch (NoResultException e) {
+            System.out.println("EXCEPTION ----> " + e);
+            return null;
+        }
+    }
 }
