@@ -27,9 +27,21 @@ public class ModelRelationApplication {
 
 //			findStudentAndAssociatedCourses(appDAO);
 
-			addMoreCoursesForStudents(appDAO);
+//			addMoreCoursesForStudents(appDAO);
 
+//			deleteCourseById(appDAO);
+
+			deleteStudentById(appDAO);
 		};
+	}
+
+	private void deleteStudentById(AppDAO appDAO) {
+		int theId = 3;
+		System.out.println("Deleting student id : " + theId);
+
+		appDAO.deleteStudentById(theId);
+
+		System.out.println("Student id : " + theId + " deleted");
 	}
 
 	private void addMoreCoursesForStudents(AppDAO appDAO) {
