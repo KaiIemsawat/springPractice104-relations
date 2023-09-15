@@ -25,9 +25,33 @@ public class ModelRelationApplication {
 
 //			findCourseAndStudents(appDAO);
 
-			findStudentAndAssociatedCourses(appDAO);
+//			findStudentAndAssociatedCourses(appDAO);
+
+			addMoreCoursesForStudents(appDAO);
 
 		};
+	}
+
+	private void addMoreCoursesForStudents(AppDAO appDAO) {
+		int theId = 2;
+		Student tempStudent = appDAO.findStudentAndCoursesByStudentId(theId);
+
+//		Create more courses
+		Course moreCourse1 = new Course("How to fight with the red ball");
+		Course moreCourse2 = new Course("The stick catcher");
+		Course moreCourse3 = new Course("How to mark like a gentle(dog)man");
+
+//		Add courses to student
+		tempStudent.addCourse(moreCourse1);
+		tempStudent.addCourse(moreCourse3);
+		tempStudent.addCourse(moreCourse2);
+
+		System.out.println("Updating student : " + tempStudent);
+		System.out.println("Associated courses : " + tempStudent.getCourses());
+
+		appDAO.updateStudentCourse(tempStudent);
+
+		System.out.println("Updated new courses to student completed");
 	}
 
 	private void findStudentAndAssociatedCourses(AppDAO appDAO) {
